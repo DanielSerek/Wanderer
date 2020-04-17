@@ -118,7 +118,7 @@ namespace Wanderer
             if (y < map.MapSize) proposedLocations.Add(new PathFinder() { X = x, Y = y + 1});
             if (x < map.MapSize) proposedLocations.Add(new PathFinder() { X = x + 1, Y = y});
 
-            return proposedLocations.Where(l => map.GetTile(l.X, l.Y) == TileType.Floor).ToList();
+            return proposedLocations.Where(l => map.GetTile(new Position(l.X, l.Y)) == TileType.Floor).ToList();
         }
     }
     

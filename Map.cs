@@ -4,7 +4,6 @@ namespace Wanderer
 {
     public class Map
     {
-
         public enum TileType
         {
             Wall,
@@ -15,6 +14,8 @@ namespace Wanderer
         public TileType[,] GameMap = null;
         public int MapSize;
         private Drawer drawer;
+        // A delegate to be used in the iteration through the map
+        private delegate void MapIter(Position pos);
         // Holds information how many floor tiles were created, is needed for floodFill method 
         private int floorCount; 
 
@@ -24,6 +25,18 @@ namespace Wanderer
             MapSize = mapSize;
             // Generate the virtual GameMap
             GameMap = new TileType[MapSize, MapSize];
+        }
+
+        private void IterateThroughMap(MapIter handleCell)
+        {
+            for (int i = 0; i < MapSize; i++)
+            {
+                for (int j = 0; j < MapSize; j++)
+                {
+                    Position pos = new Position(i, j);
+                    handleCell(pos);
+                }
+            }
         }
 
         // Creates a game map
@@ -48,57 +61,49 @@ namespace Wanderer
         {
             Random random = new Random();
             int randomNumber;
-
-            for (int i = 0; i < MapSize; i++)
+            IterateThroughMap((pos) => 
             {
-                for (int j = 0; j < MapSize; j++)
+                randomNumber = random.Next(1, 100);
+                if (randomNumber <= wallsPercentage) SetTile(pos, TileType.Wall);
+                else
                 {
-                    randomNumber = random.Next(1, 100);
-                    if (randomNumber <= wallsPercentage)
-                    {
-                        GameMap[i, j] = TileType.Wall;
-                    }
-                    else
-                    {
-                        GameMap[i, j] = TileType.Floor;
-                        floorCount++;
-                    }
+                    SetTile(pos, TileType.Floor);
+                    floorCount++;
                 }
-            }
+            });
             return floorCount;
         }
 
-        // Resolves boundary conditions (not to get outside of the array) and returns a type of a tile
-        public TileType GetTile(int x, int y)
+        public void SetTile(Position pos, TileType type)
         {
-            if (x < 0 || x >= MapSize ||
-                y < 0 || y >= MapSize) return TileType.Wall;
-            return GameMap[x, y];
+            GameMap[pos.X, pos.Y] = type;
+        }
+
+
+        // Resolves boundary conditions (not to get outside of the array) and returns a type of a tile
+        public TileType GetTile(Position pos)
+        {
+            if (pos.X < 0 || pos.X >= MapSize ||
+                pos.Y < 0 || pos.Y >= MapSize) return TileType.Wall;
+            return GameMap[pos.X, pos.Y];
         }
 
         public void PrintMap()
         {
-            for (int i = 0; i < MapSize; i++)
+            IterateThroughMap((pos) =>
             {
-                for (int j = 0; j < MapSize; j++)
-                {
-                    if (GameMap[i, j] == TileType.Wall) drawer.DrawMapImage(Drawer.ImgType.Wall, new Position(i,j));
-                    else drawer.DrawMapImage(Drawer.ImgType.Floor, new Position(i,j));
-                }
-            }
+                if (GetTile(pos) == TileType.Wall) drawer.DrawMapImage(Drawer.ImgType.Wall, pos);
+                else drawer.DrawMapImage(Drawer.ImgType.Floor, pos);
+            });
         }
 
         // Change of flooded tiles back to floor tiles
         void ChangeFloodedToFloor()
         {
-            for (int i = 0; i < MapSize; i++)
+            IterateThroughMap((pos) =>
             {
-                for (int j = 0; j < MapSize; j++)
-                {
-                    if (GameMap[i, j] == TileType.Flooded)
-                        GameMap[i, j] = TileType.Floor;
-                }
-            }
+                if (GetTile(pos) == TileType.Flooded) SetTile(pos, TileType.Floor);
+            });
         }
 
 
@@ -106,10 +111,10 @@ namespace Wanderer
         int CheckFloodFill()
         {
             int count = 0;
-            foreach (var tile in GameMap)
+            IterateThroughMap((pos) =>
             {
-                if (tile == TileType.Flooded) count++;
-            }
+                if (GetTile(pos) == TileType.Flooded) count++;
+            });
             return count;
         }
 
@@ -141,26 +146,8 @@ namespace Wanderer
             {
                 i = random.Next(1, MapSize);
                 j = random.Next(1, MapSize);
-            } while (GetTile(i, j) != TileType.Floor);
+            } while (GetTile(new Position(i, j)) != TileType.Floor);
             return new Position(i, j);
         }
-
-        //private void IterateThroughMap(MapIter handleCell)
-        //{
-        //    for (int i = 0; i < Size.X; i++)
-        //    {
-        //        for (int j = 0; j < Size.Y; j++)
-        //        {
-        //            Point pos = new Point(i, j);
-        //            handleCell(pos);
-        //        }
-        //    }
-        //}
-
-        //IterateThroughMap((pos) => {
-        //    if (rand.Next() % 100 < wallProbability) SetTile(pos, TileType.Wall);
-        //    else SetTile(pos, TileType.Floor);
-        //    if (!CheckMapContinuity()) SetTile(pos, TileType.Floor);
-        //});
     }
 }

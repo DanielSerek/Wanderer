@@ -81,7 +81,7 @@ namespace Wanderer
         // Checks if the tile is empty
         private bool CheckTileOccupancy(int x, int y)
         {
-            if (map.GetTile(x, y) == Map.TileType.Wall) return false;
+            if (map.GetTile(new Position(x, y)) == Map.TileType.Wall) return false;
             if (!gameControl.IsCellFree(new Position(x, y))) return false;
             return true;
         }

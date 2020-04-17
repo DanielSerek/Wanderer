@@ -144,7 +144,6 @@ C:\Users\Dan\Documents\CODING\Wanderer\bin\Debug\netcoreapp3.0\runtimes\win-x64\
 C:\Users\Dan\Documents\CODING\Wanderer\bin\Debug\netcoreapp3.0\runtimes\win-x86\native\libSkiaSharp.dll
 C:\Users\Dan\Documents\CODING\Wanderer\bin\Debug\netcoreapp3.0\runtimes\unix\lib\netcoreapp2.0\System.Drawing.Common.dll
 C:\Users\Dan\Documents\CODING\Wanderer\bin\Debug\netcoreapp3.0\runtimes\win\lib\netcoreapp2.0\System.Drawing.Common.dll
-C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.csprojAssemblyReference.cache
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.AssemblyInfoInputs.cache
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.AssemblyInfo.cs
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.csproj.CopyComplete

@@ -259,6 +259,7 @@ namespace Wanderer
                 if (defender is Skeleton) Skeletons.Remove((Skeleton)defender);
                 if (defender is Boss) Boss = null;
             }
+            GetSkeletonInfo();
         }
 
         private void RenderReward(Character defender)
