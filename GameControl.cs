@@ -39,15 +39,8 @@ namespace Wanderer
         // Generate the player in next levels
         private void PlacePlayer()
         {
-            Player.Position.X = -1;
-            Player.Position.Y = -1;
             // Find an empty random cell in the map
-            Position pos;
-            do
-            {
-                pos = map.RandomFreeCell();
-            } while (CheckCollissions(pos));
-            Player.Position = pos;
+            Player.Position = FindEmptyPosition();
             drawer.DrawImage(Player, Drawer.ImgType.HeroDown);
         }
 
@@ -55,15 +48,9 @@ namespace Wanderer
         {
             // Generate Skeletons 
             Position pos;
-            //num = 1;  //FOR TESTING PURPOSES
             for (int i = 0; i < num; i++)
             {
-                // Find an empty random cell in the map
-                do
-                {
-                    pos = map.RandomFreeCell();
-                } while (CheckCollissions(pos));
-
+                pos = FindEmptyPosition();
                 // Add Skeleton to the list of Skeletons
                 Skeletons.Add(new Skeleton(pos, map, drawer, this, "Skeleton" + i.ToString()));
                 drawer.DrawImage("Skeleton" + i.ToString(), Drawer.ImgType.SkeletonDown, pos);
@@ -74,13 +61,19 @@ namespace Wanderer
         private void GenerateBoss()
         {
             // Generate a Boss
+            Position pos = FindEmptyPosition();
+            Boss = new Boss(pos, map, drawer, this, "Boss");
+            drawer.DrawImage(Boss, Drawer.ImgType.BossDown);
+        }
+
+        private Position FindEmptyPosition()
+        {
             Position pos;
             do
             {
                 pos = map.RandomFreeCell();
             } while (CheckCollissions(pos));
-            Boss = new Boss(pos, map, drawer, this, "Boss");
-            drawer.DrawImage(Boss, Drawer.ImgType.BossDown);
+            return pos;
         }
 
         public void PlayerMove()
@@ -100,7 +93,7 @@ namespace Wanderer
             Fight(GetCharacter(), Player);
         }
 
-        // If a player is close to the boss, he attacks player
+        // If a player is next to the boss, he attacks player
         public void BossAttacks()
         {
             if (Boss is null) return;
@@ -119,10 +112,14 @@ namespace Wanderer
         public void GetSkeletonInfo()
         {
             Character enemy = GetCharacter();
+
+            // Display enemy information
             if (FacingTowardsEnemy(enemy) && !enemyInfoDisplayed)
             {
                 string[] tb = { $"{enemy.CurrentHP} / {enemy.MaxHP}", $"{enemy.SP}", $"{enemy.DP}" };
+                // Headline
                 drawer.AddTextBlocks("Enemy", "Beast", 25, 350, 620);
+                // Individual information
                 for  (int i = 0; i < tb.Length; i++)
                 {   
                     drawer.AddTextBlocks("Enemy" + i.ToString(), tb[i], 20, 400 + i * 50, 670);
@@ -130,6 +127,7 @@ namespace Wanderer
                 enemyInfoDisplayed = true;
                 drawer.DisplayEnemySidebarImages(true);
             }
+            // Update information about enemy
             if (FacingTowardsEnemy(enemy) && enemyInfoDisplayed)
             {
                 string[] tb = { $"{enemy.CurrentHP} / {enemy.MaxHP}", $"{enemy.SP}", $"{enemy.DP}" };
@@ -138,6 +136,7 @@ namespace Wanderer
                     drawer.TextBlocks["Enemy" + i.ToString()].Text = tb[i];
                 }
             }
+            // Remove enemy information from sidebar
             if (enemyInfoDisplayed && !FacingTowardsEnemy(enemy))
             {
                 enemyInfoDisplayed = false;
@@ -153,7 +152,6 @@ namespace Wanderer
                 drawer.DisplayEnemySidebarImages(false);
             }
         }
-
 
         // Update status about the player
         public void ShowStatus()
@@ -192,7 +190,7 @@ namespace Wanderer
             } 
         }
 
-        // Get the character on the position where a Player is
+        // Get the character next to the position where a Player is
         private Character GetCharacter()
         {
             foreach (var skeleton in Skeletons)
@@ -212,6 +210,7 @@ namespace Wanderer
             else return false;
         }
 
+        // Check whether the cell is occupied by any character
         public bool IsCellFree(Position position)
         {
             if (Player.Position.X == position.X && Player.Position.Y == position.Y) return false;
@@ -262,6 +261,7 @@ namespace Wanderer
             GetSkeletonInfo();
         }
 
+        // Generates a reward after killing a skeleton
         private void RenderReward(Character defender)
         {
             Random random = new Random();
@@ -332,7 +332,7 @@ namespace Wanderer
             drawer.UpdateStatusText(GetPlayerInfo());
         }
 
-        // Checks if conditions for the next level were met and sets a new level
+        // Checks if conditions for creation of a boss and the next level were met and sets a new level
         public void CheckStatus()
         {
             if (levelPreparation)

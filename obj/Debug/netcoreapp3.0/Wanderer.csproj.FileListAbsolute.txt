@@ -149,3 +149,4 @@ C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.Assembly
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.csproj.CopyComplete
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.dll
 C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.pdb
+C:\Users\Dan\Documents\CODING\Wanderer\obj\Debug\netcoreapp3.0\Wanderer.csprojAssemblyReference.cache

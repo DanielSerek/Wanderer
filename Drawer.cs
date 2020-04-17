@@ -28,17 +28,17 @@ namespace Wanderer
 
         public Canvas Canvas;
         public int PicSize = 72;
-        public Dictionary<string, Image> Images; // Dictionary is used to call different Image objects
-        private Dictionary<string, Image> sidebarImages;
-        public Dictionary<string, TextBlock> TextBlocks;
-        ImgType[] sidebarTiles = new ImgType[] { ImgType.FirstAid, ImgType.Armour, ImgType.Weapon };
+        public  Dictionary<string, Image> Images; // Dictionary is used to call different Image objects
+        public  Dictionary<string, TextBlock> TextBlocks;
         public bool SidebarImagesLoaded;
         private int left;
         private int top;
         private Dictionary<ImgType, Bitmap> resources;
         private static string imagePath = @"../../../img/";
+        private Dictionary<string, Image> sidebarImages;
+        ImgType[] sidebarTiles = new ImgType[] { ImgType.FirstAid, ImgType.Armour, ImgType.Weapon };
 
-        // Variables used in RedScreen method
+        // Variables used in RedScreen method (with Timer)
         private byte opacity;
         private bool redDown;
         public bool AvaloniaRedDownLock; // Not to display more images on Canvas
@@ -49,7 +49,6 @@ namespace Wanderer
         };
         DispatcherTimer Timer = new DispatcherTimer();
         TextBlock PausedTextBlock;
-
 
         public Drawer(Canvas canvas, int picsize, int left, int top)
         {
@@ -116,8 +115,8 @@ namespace Wanderer
             DrawImage(ch.Id, type, ch.Position);
         }
 
-        // The method is separate because we don't need to keep map tiles images
-        public void DrawMapImage(ImgType type, Position pos)
+        // The method is used for drawing map - in this case we don't need to keep map tiles Avalonia images
+        public void DrawImage(ImgType type, Position pos)
         {
             DrawImage(null, type, pos);
         }
@@ -173,7 +172,7 @@ namespace Wanderer
         {
             if (paused)
             {
-                PausedTextBlock = CenterText("pause", SetColor(255, 0, 0), Darken(156));
+                PausedTextBlock = CenterText("PAUSE", SetColor(255, 0, 0), Darken(156));
                 Canvas.Children.Add(PausedTextBlock);
             }
             else Canvas.Children.Remove(PausedTextBlock);
@@ -191,69 +190,6 @@ namespace Wanderer
             Canvas.SetTop(rectangle, 0);
             if (opacity < 5) return;
         }
-        
-        public void SideBar()
-        {
-            Rectangle sideBar = new Rectangle()
-            {
-                Width = 200,
-                Height = 600,
-            };
-            // Grey sidebar background
-            sideBar.Fill = new SolidColorBrush(new Color(255, 50, 50, 50));
-            Canvas.SetLeft(sideBar, 600);
-            Canvas.SetTop(sideBar, 0);
-            Canvas.Children.Add(sideBar);
-            if (!SidebarImagesLoaded)
-            {
-                PlaceSidebarImages("Player", 610, 50);
-                SidebarImagesLoaded = true;
-            }
-        }
-
-        private void PlaceSidebarImages(string name, int left, int top)
-        {
-            for (int i = 0; i < sidebarTiles.Length; i++)
-            {
-                LoadSidebarImages(name, sidebarTiles[i]);
-                Canvas.SetLeft(sidebarImages[name + sidebarTiles[i].ToString()], left);
-                Canvas.SetTop(sidebarImages[name + sidebarTiles[i].ToString()], top + i * 50);
-            }
-        }
-
-        public void DisplayEnemySidebarImages(bool turnOn)
-        {
-            if (turnOn)
-            {
-                PlaceSidebarImages("Enemy", 610, 400);
-            }
-            if (!turnOn)
-            {
-                for (int i = 0; i < sidebarImages.Count; i++)
-                {
-                    for (int j = 0; j < sidebarTiles.Length; j++)
-                    {
-                        if (sidebarImages.ContainsKey("Enemy" + sidebarTiles[j].ToString()))
-                        {
-                            Canvas.Children.Remove(sidebarImages["Enemy" + sidebarTiles[j].ToString()]);
-                            sidebarImages.Remove("Enemy" + sidebarTiles[j].ToString());
-                        }
-                    }
-                }
-            }
-        }
-
-
-        public void LoadSidebarImages(string type, ImgType name)
-        {
-            Image image = new Image();
-            image.Source = resources[name];
-            image.Width = 45;
-            image.Height = 45;
-            sidebarImages.Add(type + name.ToString(), image);
-            Canvas.Children.Add(image);
-        }
-
 
         private void Timer_RedColor(object sender, EventArgs e)
         {
@@ -278,6 +214,59 @@ namespace Wanderer
             catch (Exception m)
             {
                 string str = m.Message;
+            }
+        }
+        public void SideBar()
+        {
+            Rectangle sideBar = new Rectangle()
+            {
+                Width = 200,
+                Height = 600,
+            };
+            // Grey sidebar background
+            sideBar.Fill = new SolidColorBrush(new Color(255, 50, 50, 50));
+            Canvas.SetLeft(sideBar, 600);
+            Canvas.SetTop(sideBar, 0);
+            Canvas.Children.Add(sideBar);
+            // Side bar images placing
+            if (!SidebarImagesLoaded)
+            {
+                PlaceSidebarImages("Player", 610, 50);
+                SidebarImagesLoaded = true;
+            }
+        }
+
+        private void PlaceSidebarImages(string name, int left, int top)
+        {
+            for (int i = 0; i < sidebarTiles.Length; i++)
+            {
+                Image image = new Image();
+                image.Source = resources[sidebarTiles[i]];
+                image.Width = 45;
+                image.Height = 45;
+                sidebarImages.Add(name + sidebarTiles[i].ToString(), image);
+                Canvas.Children.Add(image);
+                Canvas.SetLeft(sidebarImages[name + sidebarTiles[i].ToString()], left);
+                Canvas.SetTop(sidebarImages[name + sidebarTiles[i].ToString()], top + i * 50);
+            }
+        }
+
+        public void DisplayEnemySidebarImages(bool turnOn)
+        {
+            if (turnOn) PlaceSidebarImages("Enemy", 610, 400);
+            if (!turnOn)
+            {
+                for (int i = 0; i < sidebarImages.Count; i++)
+                {
+                    for (int j = 0; j < sidebarTiles.Length; j++)
+                    {
+                        if (sidebarImages.ContainsKey("Enemy" + sidebarTiles[j].ToString()))
+                        {
+                            Canvas.Children.Remove(sidebarImages["Enemy" + sidebarTiles[j].ToString()]);
+                            sidebarImages.Remove("Enemy" + sidebarTiles[j].ToString());
+                        }
+                    }
+                }
             }
         }
 
@@ -313,6 +302,7 @@ namespace Wanderer
             return new SolidColorBrush(new Color(a, 0, 0, 0));
         }
 
+        // Set the drawer for the next level
         public void PrepareDrawer()
         {
             AvaloniaRedDownLock = false;

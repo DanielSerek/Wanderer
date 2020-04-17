@@ -92,8 +92,8 @@ namespace Wanderer
         {
             IterateThroughMap((pos) =>
             {
-                if (GetTile(pos) == TileType.Wall) drawer.DrawMapImage(Drawer.ImgType.Wall, pos);
-                else drawer.DrawMapImage(Drawer.ImgType.Floor, pos);
+                if (GetTile(pos) == TileType.Wall) drawer.DrawImage(Drawer.ImgType.Wall, pos);
+                else drawer.DrawImage(Drawer.ImgType.Floor, pos);
             });
         }
 
@@ -105,7 +105,6 @@ namespace Wanderer
                 if (GetTile(pos) == TileType.Flooded) SetTile(pos, TileType.Floor);
             });
         }
-
 
         // Count how many tiles have been flooded
         int CheckFloodFill()
