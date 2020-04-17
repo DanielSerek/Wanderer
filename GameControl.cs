@@ -128,6 +128,7 @@ namespace Wanderer
                     drawer.AddTextBlocks("Enemy" + i.ToString(), tb[i], 20, 400 + i * 50, 670);
                 }
                 enemyInfoDisplayed = true;
+                drawer.DisplayEnemySidebarImages(true);
             }
             if (FacingTowardsEnemy(enemy) && enemyInfoDisplayed)
             {
@@ -149,6 +150,7 @@ namespace Wanderer
                         drawer.TextBlocks.Remove(item.Key);
                     }
                 }
+                drawer.DisplayEnemySidebarImages(false);
             }
         }
 

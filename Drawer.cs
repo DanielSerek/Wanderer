@@ -30,9 +30,9 @@ namespace Wanderer
         public int PicSize = 72;
         public Dictionary<string, Image> Images; // Dictionary is used to call different Image objects
         private Dictionary<string, Image> sidebarImages;
-        public Dictionary<string, TextBlock> TextBlocks; 
+        public Dictionary<string, TextBlock> TextBlocks;
+        ImgType[] sidebarTiles = new ImgType[] { ImgType.FirstAid, ImgType.Armour, ImgType.Weapon };
         public bool SidebarImagesLoaded;
-        public bool EnemySidebarImagesDisplayed;
         private int left;
         private int top;
         private Dictionary<ImgType, Bitmap> resources;
@@ -213,7 +213,6 @@ namespace Wanderer
 
         private void PlaceSidebarImages(string name, int left, int top)
         {
-            ImgType[] sidebarTiles = new ImgType[] { ImgType.FirstAid, ImgType.Armour, ImgType.Weapon };
             for (int i = 0; i < sidebarTiles.Length; i++)
             {
                 LoadSidebarImages(name, sidebarTiles[i]);
@@ -222,19 +221,24 @@ namespace Wanderer
             }
         }
 
-        // TODO: Finish the implementation of the method
-        public void DisplayEnemySidebarImages(bool turnOff)
+        public void DisplayEnemySidebarImages(bool turnOn)
         {
-            if (!EnemySidebarImagesDisplayed)
+            if (turnOn)
             {
                 PlaceSidebarImages("Enemy", 610, 400);
-                EnemySidebarImagesDisplayed = true;
             }
-            if (turnOff)
+            if (!turnOn)
             {
                 for (int i = 0; i < sidebarImages.Count; i++)
                 {
-                    if (sidebarImages.ContainsKey("Enemy" + i.ToString())) sidebarImages.Remove("Enemy" + i.ToString());
+                    for (int j = 0; j < sidebarTiles.Length; j++)
+                    {
+                        if (sidebarImages.ContainsKey("Enemy" + sidebarTiles[j].ToString()))
+                        {
+                            Canvas.Children.Remove(sidebarImages["Enemy" + sidebarTiles[j].ToString()]);
+                            sidebarImages.Remove("Enemy" + sidebarTiles[j].ToString());
+                        }
+                    }
                 }
             }
         }

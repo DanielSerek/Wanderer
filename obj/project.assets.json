@@ -8700,17 +8700,17 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dan\\Documents\\CODING\\Green Fox Academy\\git-lesson-repository\\Wanderer\\Wanderer.csproj",
+      "projectUniqueName": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj",
       "projectName": "Wanderer",
-      "projectPath": "C:\\Users\\Dan\\Documents\\CODING\\Green Fox Academy\\git-lesson-repository\\Wanderer\\Wanderer.csproj",
+      "projectPath": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj",
       "packagesPath": "C:\\Users\\Dan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dan\\Documents\\CODING\\Green Fox Academy\\git-lesson-repository\\Wanderer\\obj\\",
+      "outputPath": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dan\\Documents\\CODING\\Green Fox Academy\\git-lesson-repository\\Wanderer\\NuGet.Config",
+        "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\NuGet.Config",
         "C:\\Users\\Dan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
