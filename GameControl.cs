@@ -164,10 +164,10 @@ namespace Wanderer
         {
             for (int i = 0; i < Skeletons.Count; i++)
             {
-                if (Skeletons[i].Position.X == position.X && Skeletons[i].Position.Y == position.Y) return true;
+                if (Equals(Skeletons[i].Position, position)) return true;
             }
-            if (Player.Position.X == position.X && Player.Position.Y == position.Y) return true;
-            if (Boss != null && (Boss.Position.X == position.X && Boss.Position.Y == position.Y)) return true;
+            if (Equals(Player.Position, position)) return true;
+            if (Boss != null && (Equals(Boss.Position, position))) return true;
             return false;
         }
         
@@ -213,12 +213,12 @@ namespace Wanderer
         // Check whether the cell is occupied by any character
         public bool IsCellFree(Position position)
         {
-            if (Player.Position.X == position.X && Player.Position.Y == position.Y) return false;
+            if (Equals(Player.Position, position)) return false;
             for (int i = 0; i < Skeletons.Count; i++)
             {
-                if (Skeletons[i].Position.X == position.X && Skeletons[i].Position.Y == position.Y) return false;
+                if (Equals(Skeletons[i].Position, position)) return false;
             }
-            if (Boss != null && Boss.Position.X == position.X && Boss.Position.Y == position.Y) return false;
+            if (Boss != null && Equals(Boss.Position, position)) return false;
             return true;
         }
 
@@ -296,7 +296,7 @@ namespace Wanderer
             Random random = new Random(); 
             for (int i = 0; i < Loots.Count; i++)
             {
-                if (Player.Position.X == Loots[i].Position.X && Player.Position.Y == Loots[i].Position.Y)
+                if (Equals(Player.Position, Loots[i].Position))
                 {
                     drawer.RemoveImage(Loots[i]);
                     if (Loots[i].Id.Contains("firstAid"))
@@ -391,6 +391,12 @@ namespace Wanderer
             PlacePlayer();
             drawer.PrepareDrawer();
             StatusTextDisplay(GetPlayerInfo());
+        }
+
+        private bool Equals(Position p1, Position p2)
+        {
+            if (p1 == null || p2 == null) return false;
+            return (p1.X == p2.X && p1.Y == p2.Y);
         }
     }
 }
