@@ -164,10 +164,10 @@ namespace Wanderer
         {
             for (int i = 0; i < Skeletons.Count; i++)
             {
-                if (Equals(Skeletons[i].Position, position)) return true;
+                if (Skeletons[i].Position == position) return true;
             }
-            if (Equals(Player.Position, position)) return true;
-            if (Boss != null && (Equals(Boss.Position, position))) return true;
+            if (Player.Position == position) return true;
+            if (Boss != null && (Boss.Position == position)) return true;
             return false;
         }
         
@@ -213,12 +213,12 @@ namespace Wanderer
         // Check whether the cell is occupied by any character
         public bool IsCellFree(Position position)
         {
-            if (Equals(Player.Position, position)) return false;
+            if (Player.Position == position) return false;
             for (int i = 0; i < Skeletons.Count; i++)
             {
-                if (Equals(Skeletons[i].Position, position)) return false;
+                if (Skeletons[i].Position == position) return false;
             }
-            if (Boss != null && Equals(Boss.Position, position)) return false;
+            if (Boss != null && (Boss.Position == position)) return false;
             return true;
         }
 
@@ -296,7 +296,7 @@ namespace Wanderer
             Random random = new Random(); 
             for (int i = 0; i < Loots.Count; i++)
             {
-                if (Equals(Player.Position, Loots[i].Position))
+                if (Player.Position == Loots[i].Position)
                 {
                     drawer.RemoveImage(Loots[i]);
                     if (Loots[i].Id.Contains("firstAid"))
@@ -391,12 +391,6 @@ namespace Wanderer
             PlacePlayer();
             drawer.PrepareDrawer();
             StatusTextDisplay(GetPlayerInfo());
-        }
-
-        private bool Equals(Position p1, Position p2)
-        {
-            if (p1 == null || p2 == null) return false;
-            return (p1.X == p2.X && p1.Y == p2.Y);
         }
     }
 }
