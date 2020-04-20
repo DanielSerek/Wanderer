@@ -49,10 +49,12 @@ namespace Wanderer
                 foreach (var adjacentSquare in adjacentSquares)
                 {
                     // if this adjacent square is already in the closed list, ignore it
-                    if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X && l.Y == adjacentSquare.Y) != null) continue;
+                    //if(closedList.FirstOrDefault(l => l.X == adjacentSquare.X && l.Y == adjacentSquare.Y) != null) continue;
+                    if (closedList.FirstOrDefault(l => l.IsEqual(adjacentSquare)) != null) continue;
 
                     // if it's not in the open list...
-                    if (openList.FirstOrDefault(l => l.X == adjacentSquare.X && l.Y == adjacentSquare.Y) == null)
+                    //if (openList.FirstOrDefault(l => l.X == adjacentSquare.X && l.Y == adjacentSquare.Y) == null)
+                    if (openList.FirstOrDefault(l => l.IsEqual(adjacentSquare)) == null)
                     {
                         // compute its score, set the parent
                         adjacentSquare.G = g;
@@ -83,7 +85,7 @@ namespace Wanderer
             currentTile = closedList[closedList.Count - 1];
             ReversedSteps.Add(currentTile);
 
-            while (!(currentTile.X == currentPos.X && currentTile.Y == currentPos.Y)) //Does it work??
+            while (!(currentTile.X == currentPos.X && currentTile.Y == currentPos.Y)) 
             {
                 currentTile = currentTile.Parent;
                 ReversedSteps.Add(currentTile.Parent);
@@ -114,6 +116,11 @@ namespace Wanderer
             if (x < map.MapSize) proposedLocations.Add(new PathFinder() { X = x + 1, Y = y});
 
             return proposedLocations.Where(l => map.GetTile(new Position(l.X, l.Y)) == TileType.Floor).ToList();
+        }
+        public bool IsEqual(PathFinder p)
+        {
+            if (this == null) return false;
+            return (X == p.X && Y == p.Y);
         }
     }
 }
