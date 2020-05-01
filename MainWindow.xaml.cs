@@ -23,6 +23,7 @@ namespace Wanderer
             canvas = this.Get<Canvas>("canvas");
             drawer = new Drawer(canvas, 60, 0, 0);
 
+            // Create Timer
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(GameSpeed);
             Timer.Tick += Timer_Tick;
@@ -70,7 +71,8 @@ namespace Wanderer
         {
             if (!paused)
             {
-                gameControl.DefinePathsForSkeletons();
+                // Paths for skeletons are redefined each time player changes its position
+                gameControl.DefinePathsForSkeletons(); 
                 gameControl.Player.Dir = direction;
                 gameControl.PlayerMove();
                 gameControl.GrabLoot();
@@ -94,7 +96,6 @@ namespace Wanderer
             {
                 string str = m.Message;
             }
-            
         }
 
         private void InitializeComponent()

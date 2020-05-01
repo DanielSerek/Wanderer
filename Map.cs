@@ -117,6 +117,7 @@ namespace Wanderer
             return count;
         }
 
+        // The method checks whether the generated map is fully walkable
         void FloodFill(Position pos)
         {
             // Base cases 

@@ -31,8 +31,7 @@ namespace Wanderer
             while (openList.Count > 0)
             {
                 // get the square with the lowest F score
-                var lowest = openList.Min(l => l.F);
-                current = openList.First(l => l.F == lowest);
+                current = openList.First(l => l.F == openList.Min(x => x.F));
 
                 // add the current square to the closed list
                 closedList.Add(current);
@@ -83,6 +82,7 @@ namespace Wanderer
             currentTile = closedList[closedList.Count - 1];
             ReversedSteps.Add(currentTile);
 
+            // Put all the parents in the list to find the route
             while (!(currentTile.X == currentPos.X && currentTile.Y == currentPos.Y)) 
             {
                 currentTile = currentTile.Parent;
@@ -90,6 +90,7 @@ namespace Wanderer
             } 
             ReversedSteps.Reverse();
 
+            // Transform Pathfinder positions into a simple list of positions
             positions = new List<Position>();
             foreach (var item in ReversedSteps)
             {

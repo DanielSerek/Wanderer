@@ -183,7 +183,7 @@ namespace Wanderer
         {
             for (int i = 0; i < Skeletons.Count; i++)
             {
-                if (Skeletons[i].PathPositions.Count <= 0) 
+                if (Skeletons[i].PathPositions.Count <= 0)
                     Skeletons[i].NavigateEnemyToPlayer(Player, map);
                 Skeletons[i].MoveSkeleton();
                 if (StandingNext(Skeletons[i])) AttackPlayer(); 
@@ -306,18 +306,8 @@ namespace Wanderer
                         if (rnd > 10 && rnd <= 40) Player.CurrentHP += (Player.MaxHP - Player.CurrentHP) / 2;
                         if (rnd > 50) Player.CurrentHP += (Player.MaxHP - Player.CurrentHP) / 5;
                     }
-                    if (Loots[i].Id.Contains("armour"))
-                    {
-                        int rnd = random.Next(1, 101);
-                        if (rnd <= 10) Player.DP += Level * 2 * random.Next(1, 7); 
-                        if (rnd > 0 && rnd <= 50) Player.DP += Level * random.Next(1, 7);
-                    }
-                    if (Loots[i].Id.Contains("weapon"))
-                    {
-                        int rnd = random.Next(1, 101);
-                        if (rnd <= 10) Player.SP += Level * 2 * random.Next(1, 7); ;
-                        if (rnd > 0 && rnd <= 50) Player.SP += Level * random.Next(1, 7);
-                    }
+                    if (Loots[i].Id.Contains("armour"))Player.DP = RandomGenerator(Player.DP);
+                    if (Loots[i].Id.Contains("weapon")) Player.SP = RandomGenerator(Player.SP);
                     if (Loots[i].Id.Contains("potion"))
                     {
                         int rnd = random.Next(1, 101);
@@ -330,6 +320,16 @@ namespace Wanderer
                 }
             }
             drawer.UpdateStatusText(GetPlayerInfo());
+        }
+
+        private int RandomGenerator(int input)
+        {
+            Random random = new Random(); 
+            int rnd = random.Next(1, 101);
+            if (rnd <= 10) return input += Level * random.Next(1, 7); ;
+            if (rnd > 10 && rnd <= 50) return input += random.Next(1, 7);
+            if (rnd > 50) return ++input;
+            else return 0;
         }
 
         // Checks if conditions for creation of a boss and the next level were met and sets a new level
@@ -362,7 +362,7 @@ namespace Wanderer
         
         public string[] GetPlayerInfo()
         {
-            string[] info = new string[] { $"Floor {Level}", $"{Player.CurrentHP} / {Player.MaxHP}", $"{Player.SP}", $"{Player.DP}"};
+            string[] info = new string[] { $"Floor {Level}", $"{Player.CurrentHP} / {Player.MaxHP}", $"{Player.DP}", $"{Player.SP}"};
             return info;
         }
 
