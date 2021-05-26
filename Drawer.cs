@@ -103,7 +103,7 @@ namespace Wanderer
         public void DrawImage(string imageName, ImgType type, Position pos) 
         {
             var image = new Image();
-            if (imageName != null) Images.Add(imageName, image);
+            if (imageName != null)   Images.Add(imageName, image);
             image.Source = resources[type];
             Canvas.SetLeft(image, left + pos.X * PicSize);
             Canvas.SetTop(image, top + pos.Y * PicSize);
