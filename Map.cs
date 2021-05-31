@@ -43,7 +43,7 @@ namespace Wanderer
         public void CreateMap(int wallsPercentage)
         {
             int chf = 0; // Provides information how many tiles have been flooded
-            // Generate new maps until the number of flooded tiles floor tiles
+            // Generate new maps until the number of flooded tiles equals floor tiles
             do
             {
                 floorCount = 0;

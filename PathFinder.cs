@@ -6,6 +6,11 @@ using static Wanderer.Map;
 
 namespace Wanderer
 {
+    /*
+     * The A* algorithm - the explanation can be found here:
+     * https://gigi.nullneuron.net/gigilabs/a-pathfinding-example-in-c/
+     * https://www.youtube.com/watch?v=-L-WgKMFuhE&ab_channel=SebastianLague
+    */
     public class PathFinder
     {
         private List<Position> positions;
@@ -16,6 +21,7 @@ namespace Wanderer
         private int H;  //H score is the estimated distance from the destination (calculated as the city block distance) 
         private PathFinder Parent;
 
+        // The pathfinding is used by enemies (currentPos) to find the shortest path to the player
         public List<Position> PathFinding(Position currentPos, Position playerPos, Map map)
         {
             PathFinder current = null;

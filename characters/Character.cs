@@ -52,15 +52,6 @@ namespace Wanderer
             gameControl.GetSkeletonInfo();
         }
 
-        public bool CheckDirection()
-        {
-            if (Dir == Direction.North      && CheckTileOccupancy(Position.X, Position.Y - 1)) return true;
-            else if (Dir == Direction.South && CheckTileOccupancy(Position.X, Position.Y + 1)) return true;
-            else if (Dir == Direction.West  && CheckTileOccupancy(Position.X - 1, Position.Y)) return true;
-            else if (Dir == Direction.East  && CheckTileOccupancy(Position.X + 1, Position.Y)) return true;
-            else return false;
-        }
-
         public void SetDirection()
         {
 

@@ -26,7 +26,7 @@ namespace Wanderer
             GeneratePlayer();
             GenerateSkeletons(3);
             this.drawer.SideBar();
-            StatusTextDisplay(GetPlayerInfo());
+            PlayerStatusDisplay(GetPlayerInfo());
         }
 
         private void GeneratePlayer()
@@ -93,7 +93,7 @@ namespace Wanderer
             Fight(GetCharacter(), Player);
         }
 
-        // If a player is next to the boss, he attacks player
+        // If the player is next to the boss, the boss starts to attack the player
         public void BossAttacks()
         {
             if (Boss is null) return;
@@ -139,7 +139,6 @@ namespace Wanderer
             // Remove enemy information from sidebar
             if (enemyInfoDisplayed && !FacingTowardsEnemy(enemy))
             {
-                enemyInfoDisplayed = false;
                 //Remove Enemy image from the TextBlocks collection
                 foreach (var item in drawer.TextBlocks)
                 {
@@ -150,6 +149,7 @@ namespace Wanderer
                     }
                 }
                 drawer.DisplayEnemySidebarImages(false);
+                enemyInfoDisplayed = false;
             }
         }
 
@@ -270,24 +270,24 @@ namespace Wanderer
             {
                 if(rnd >= 50)
                 {
-                    Loots.Add(new Loot(defender.Position, "firstAid" + defender.Id.Substring(defender.Id.Length - 1)));
-                    drawer.DrawImage("firstAid" + defender.Id.Substring(defender.Id.Length - 1), Drawer.ImgType.FirstAid, defender.Position);
+                    Loots.Add(new Loot(defender.Position, "firstAid" + defender.Id));
+                    drawer.DrawImage("firstAid" + defender.Id, Drawer.ImgType.FirstAid, defender.Position);
                 }
                 if(rnd >= 0 && rnd < 25)
                 {
-                    Loots.Add(new Loot(defender.Position, "armour" + defender.Id.Substring(defender.Id.Length - 1)));
-                    drawer.DrawImage("armour" + defender.Id.Substring(defender.Id.Length - 1), Drawer.ImgType.Armour, defender.Position);
+                    Loots.Add(new Loot(defender.Position, "armour" + defender.Id));
+                    drawer.DrawImage("armour" + defender.Id, Drawer.ImgType.Armour, defender.Position);
                 }
                 if (rnd >= 25 && rnd < 50)
                 {
-                    Loots.Add(new Loot(defender.Position, "weapon" + defender.Id.Substring(defender.Id.Length - 1)));
-                    drawer.DrawImage("weapon" + defender.Id.Substring(defender.Id.Length - 1), Drawer.ImgType.Weapon, defender.Position);
+                    Loots.Add(new Loot(defender.Position, "weapon" + defender.Id));
+                    drawer.DrawImage("weapon" + defender.Id, Drawer.ImgType.Weapon, defender.Position);
                 }
             }
             if(defender is Boss)
             {
-                Loots.Add(new Loot(defender.Position, "potion" + defender.Id.Substring(defender.Id.Length - 1)));
-                drawer.DrawImage("potion" + defender.Id.Substring(defender.Id.Length - 1), Drawer.ImgType.Potion, defender.Position);
+                Loots.Add(new Loot(defender.Position, "potion" + defender.Id));
+                drawer.DrawImage("potion" + defender.Id, Drawer.ImgType.Potion, defender.Position);
             }
         }
 
@@ -367,7 +367,7 @@ namespace Wanderer
         }
 
         // The method is used to display player's status
-        public void StatusTextDisplay(string[] tb)
+        public void PlayerStatusDisplay(string[] tb)
         {
             drawer.AddTextBlocks("0", tb[0], 25, 10, 620);
             for (int i = 1; i < tb.Length; i++)
@@ -390,7 +390,7 @@ namespace Wanderer
             GenerateSkeletons(2 + Level);
             PlacePlayer();
             drawer.PrepareDrawer();
-            StatusTextDisplay(GetPlayerInfo());
+            PlayerStatusDisplay(GetPlayerInfo());
         }
     }
 }
