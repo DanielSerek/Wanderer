@@ -195,7 +195,7 @@ namespace Wanderer
         {
             foreach (var skeleton in Skeletons)
             {
-                if (StandingNext(skeleton)) return skeleton;
+                if (StandingNext(skeleton) && FacingTowardsEnemy(skeleton)) return skeleton;
             }
             if (Boss == null) return null;
             if (StandingNext(Boss)) return Boss;
