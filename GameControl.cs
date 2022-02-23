@@ -236,7 +236,7 @@ namespace Wanderer
         // Fight between the player and the enemy
         private void Fight(Character attacker, Character defender)
         {
-            if (defender == null) return;
+            if (defender == null || attacker == null) return;
             if (attacker is Player && !FacingTowardsEnemy(defender)) return;
             int SV = 0; // Strike Value
             Random random = new Random();

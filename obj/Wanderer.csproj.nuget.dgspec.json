@@ -1,26 +1,22 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\Wanderer.csproj": {}
+    "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\Wanderer.csproj": {
+    "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\Wanderer.csproj",
+        "projectUniqueName": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj",
         "projectName": "Wanderer",
-        "projectPath": "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\Wanderer.csproj",
+        "projectPath": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\Wanderer.csproj",
         "packagesPath": "C:\\Users\\Dan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\obj\\",
+        "outputPath": "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Dan\\Documents\\!!! CODING\\Wanderer\\NuGet.Config",
+          "C:\\Users\\Dan\\Documents\\CODING\\Wanderer\\NuGet.Config",
           "C:\\Users\\Dan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -32,6 +28,7 @@
         },
         "frameworks": {
           "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
             "projectReferences": {}
           }
         },
@@ -43,14 +40,15 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
           "dependencies": {
             "Avalonia": {
               "target": "Package",
-              "version": "[0.9.0, )"
+              "version": "[0.10.4, )"
             },
             "Avalonia.Desktop": {
               "target": "Package",
-              "version": "[0.9.0, )"
+              "version": "[0.10.4, )"
             }
           },
           "imports": [
@@ -86,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
